@@ -2,7 +2,9 @@ package jp.co.sss.crud.db;
 
 import static jp.co.sss.crud.util.ConstantSQL.*;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +27,6 @@ public class EmployeeDAO {
 	public List<Employee> findAll() throws ClassNotFoundException, SQLException {
 		List<Employee> employees = new ArrayList<>();
 		//TODO 以下に実装する
-		
 
 		return employees;
 	}
@@ -41,7 +42,10 @@ public class EmployeeDAO {
 	public List<Employee> findByEmployeeName(String searchName) throws ClassNotFoundException, SQLException {
 		List<Employee> employees = new ArrayList<>();
 		//TODO 以下に実装する
-
+		Connection connection = null;
+		PreparedStatement preparedstatement = null;
+		ResultSet resultSet = null;
+		
 		return employees;
 	}
 
