@@ -14,6 +14,7 @@ public class EmployeeNameReader {
 	 */
 
 	public String input() throws IOException, IllegalArgumentException {
+		
 		return "";
 	}
 

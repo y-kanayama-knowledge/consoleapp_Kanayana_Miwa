@@ -12,6 +12,8 @@ import java.sql.SQLException;
 public class DBManager {
 
 	//接続情報を記述すること
+	
+	private static final String DRIVER="oracle.jdbc.driver.OracleDriver";
 
 	/** 接続するDBのURL */
 	private static final String URL = "jdbc:oracle:thin:@localhost:1521/xepdb1";

@@ -2,6 +2,9 @@ package jp.co.sss.crud.db;
 
 import static jp.co.sss.crud.util.ConstantSQL.*;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -71,14 +74,52 @@ public class EmployeeDAO {
 	 * @return {@code List<Employee>} 検索社員名を含むエンティティリスト
 	 * @throws ClassNotFoundException ドライバクラスが存在しない場合に送出
 	 * @throws SQLException データベース操作時にエラーが発生した場合に送出
+	 * @throws IOException 
 	 */
-	public List<Employee> findByEmployeeName(String searchName) throws ClassNotFoundException, SQLException {
+	public List<Employee> findByEmployeeName(String searchName) throws ClassNotFoundException, SQLException, IOException {
 		List<Employee> employees = new ArrayList<>();
 		//TODO 以下に実装する
+		Employee employee = null;
 		Connection connection = null;
-		PreparedStatement preparedstatement = null;
+		PreparedStatement preparedStatement = null;
 		ResultSet resultSet = null;
 		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		String str=br.readLine();
+		
+		try{
+		     
+		     connection = DBManager.getConnection();
+		     
+		     preparedStatement = connection.prepareStatement(ConstantSQL.SQL_FIND_BY_EMP_NAME);
+		     
+		     preparedStatement.setString(1,"%" +str+ "%");
+		     
+		     resultSet = preparedStatement.executeQuery();
+		     
+		     
+		     
+ 		     while(resultSet.next()){
+ 		    	Department dept = new Department();
+				employee = new Employee();
+				employee.setEmpId(resultSet.getInt("emp_id"));
+				employee.setEmpName(resultSet.getString("emp_name"));
+				employee.setGender(resultSet.getInt("gender"));
+				employee.setBirthday(resultSet.getString("birthday"));
+				dept.setDeptName(resultSet.getString("dept_name"));
+				employee.setDepartment(dept);
+				employees.add(employee);
+	           
+	         }
+	         
+	         } catch(ClassNotFoundException | SQLException e){
+	           e.printStackTrace();
+	         
+	         } finally {
+	           DBManager.close(resultSet);
+	           DBManager.close(preparedStatement);
+	           DBManager.close(connection);
+	         }
 		return employees;
 	}
 

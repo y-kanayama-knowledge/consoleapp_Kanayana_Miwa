@@ -7,6 +7,7 @@ import java.util.List;
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Department;
 import jp.co.sss.crud.dto.Employee;
+import jp.co.sss.crud.io.EmployeeNameReader;
 
 /**
  * 社員管理システム実行用クラス
@@ -78,7 +79,20 @@ public class MainSystem01NonValid {
 				case 2:
 					System.out.print("社員名を入力してください:");
 					//TODO 以下に実装する
-
+					EmployeeNameReader empname=new EmployeeNameReader();
+					String str;
+					str=empname.input();
+					List<Employee>es = employeeDAO.findByEmployeeName(str);
+					if(es.isEmpty()) {
+						System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
+						System.out.println("該当する社員は存在しません。");
+					} else {
+						System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
+						for (Employee emp:es) {
+							System.out.println(emp);
+						}
+					}
+					
 					break;
 
 				case 3:
