@@ -84,7 +84,6 @@ public class MainSystem01NonValid {
 					str=empname.input();
 					List<Employee>es = employeeDAO.findByEmployeeName(str);
 					if(es.isEmpty()) {
-						System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
 						System.out.println("該当する社員は存在しません。");
 					} else {
 						System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
