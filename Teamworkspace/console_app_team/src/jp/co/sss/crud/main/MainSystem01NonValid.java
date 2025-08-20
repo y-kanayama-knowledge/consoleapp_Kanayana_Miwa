@@ -2,6 +2,7 @@ package jp.co.sss.crud.main;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.List;
 
 import jp.co.sss.crud.db.EmployeeDAO;
 import jp.co.sss.crud.dto.Department;
@@ -62,13 +63,16 @@ public class MainSystem01NonValid {
 				// メニュー番号の入力
 				String menuNoStr = br.readLine();
 				menuNo = Integer.parseInt(menuNoStr);
-
+				
 				// 機能の呼出
 				switch (menuNo) {
 				case 1:
 					System.out.println("社員ID\t社員名\t性別\t生年月日\t部署名");
 					//TODO 以下に実装する
-
+					List<Employee> employees = employeeDAO.findAll();
+					for (Employee emp:employees) {
+						System.out.println(emp);
+					}
 					break;
 
 				case 2:
@@ -115,7 +119,6 @@ public class MainSystem01NonValid {
 			} while (menuNo != 7);
 		} catch (Exception e) {
 			//TODO 以下に実装する
-
 		}
 		System.out.println("システムを終了します。");
 	}
