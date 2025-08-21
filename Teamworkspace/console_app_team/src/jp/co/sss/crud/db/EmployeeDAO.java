@@ -194,7 +194,7 @@ public class EmployeeDAO {
 		 String gender=br.readLine();
 		System.out.print("生年月日（西暦年/月/日）:");
 		 String birthday=br.readLine();
-		 System.out.print("部署ID(1：営業部、2：経理部、3：総務部)");
+		 System.out.print("部署ID(1：営業部、2：経理部、3：総務部):");
 		 String deptId=br.readLine();
 		 
 		 connection = DBManager.getConnection();
@@ -225,10 +225,45 @@ public class EmployeeDAO {
 	 * @param employee
 	 * @throws ClassNotFoundException ドライバクラスが存在しない場合に送出
 	 * @throws SQLException データベース操作時にエラーが発生した場合に送出
+	 * @throws IOException 
+	 * @throws NumberFormatException 
 	 */
-	public void update(Employee employee) throws ClassNotFoundException, SQLException {
+	public void update(Employee employee) throws ClassNotFoundException, SQLException, NumberFormatException, IOException {
 		//TODO 以下に実装する
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		try {
+			
+			
+		System.out.print("更新する社員の社員IDを入力してください:");
+		int empId = Integer.parseInt(br.readLine());
+		System.out.print("社員名:");
+		String empName = br.readLine();
+		System.out.print("性別(0:回答しない, 1:男性, 2:女性, 9:その他):");
+		int gender =  Integer.parseInt(br.readLine());
+		System.out.print("生年月日(西暦年/月/日):");
+		String birthday = br.readLine();
+		System.out.print("部署ID(1:営業部、2:経理部、3:総務部):");
+		
+		int deptId = Integer.parseInt(br.readLine());
+		connection = DBManager.getConnection();
+		preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
+		
+		preparedStatement.setString(1,empName);
+		preparedStatement.setInt(2,gender);
+		preparedStatement.setString(3,birthday);
+		preparedStatement.setInt(4,deptId);
+		preparedStatement.setInt(5,empId);
+		preparedStatement.executeUpdate();
 
+		System.out.println("社員情報を更新しました");
+		} catch(ClassNotFoundException | SQLException | NumberFormatException | IOException e) {
+		    e.printStackTrace();
+		} finally {
+			 DBManager.close(preparedStatement);
+			   DBManager.close(connection);
+		}
 	}
 
 	/**
