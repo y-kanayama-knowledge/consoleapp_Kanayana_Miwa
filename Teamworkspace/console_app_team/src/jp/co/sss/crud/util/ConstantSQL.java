@@ -21,7 +21,7 @@ public class ConstantSQL {
 	public static String SQL_FIND_BY_DEPTID = "SELECT emp_id,emp_name,gender,TO_CHAR(birthday, 'yyyy/MM/dd') AS birthday,dept_name FROM employee INNER JOIN department ON employee.dept_id=department.dept_id WHERE employee.dept_id = ? ORDER BY emp_id";
 
 	/** 登録 */
-	public static final String SQL_INSERT = "";
+	public static final String SQL_INSERT = "INSERT INTO employee VALUES(seq_emp.NEXTVAL,?,?,?,?)";
 
 	/** 更新 */
 	public static final String SQL_UPDATE = "";

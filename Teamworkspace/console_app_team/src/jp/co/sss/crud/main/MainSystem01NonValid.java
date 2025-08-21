@@ -115,11 +115,7 @@ public class MainSystem01NonValid {
 
 				case 4:
 					//TODO 以下に実装する
-
-					System.out.print("社員名:");
-					System.out.print("性別(1:男性, 2:女性):");
-					System.out.print("生年月日(西暦年/月/日):");
-					System.out.print("部署ID(1:営業部、2:経理部、3:総務部):");
+					employeeDAO.insert(employee);
 
 					break;
 

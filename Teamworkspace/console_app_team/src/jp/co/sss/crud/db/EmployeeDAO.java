@@ -177,9 +177,45 @@ public class EmployeeDAO {
 	 * @param employee
 	 * @throws ClassNotFoundException ドライバクラスが存在しない場合に送出
 	 * @throws SQLException データベース操作時にエラーが発生した場合に送出
+	 * @throws IOException 
 	 */
-	public void insert(Employee employee) throws ClassNotFoundException, SQLException {
+	public void insert(Employee employee) throws ClassNotFoundException, SQLException, IOException {
 		//TODO 以下に実装する
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		
+	try{
+		
+		System.out.print("社員名：");
+		 String empName=br.readLine();
+		System.out.print("性別(1: 男性, 2: 女性):");
+		 String gender=br.readLine();
+		System.out.print("生年月日（西暦年/月/日）:");
+		 String birthday=br.readLine();
+		 System.out.print("部署ID(1：営業部、2：経理部、3：総務部)");
+		 String deptId=br.readLine();
+		 
+		 connection = DBManager.getConnection();
+			
+		 preparedStatement = connection.prepareStatement(ConstantSQL.SQL_INSERT);
+		
+		preparedStatement.setString(1,empName);
+		preparedStatement.setString(2,gender);
+		preparedStatement.setString(3,birthday);
+		preparedStatement.setString(4,deptId);
+		
+		int cnt=preparedStatement.executeUpdate();
+		System.out.println("社員情報を登録しました");
+		
+	} catch(ClassNotFoundException | SQLException e) {
+	    e.printStackTrace();
+	
+	} finally {
+	   DBManager.close(preparedStatement);
+	   DBManager.close(connection);
+	}
 
 	}
 
