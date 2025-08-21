@@ -207,6 +207,8 @@ public class EmployeeDAO {
 		preparedStatement.setString(4,deptId);
 		
 		int cnt=preparedStatement.executeUpdate();
+		
+		
 		System.out.println("社員情報を登録しました");
 		
 	} catch(ClassNotFoundException | SQLException e) {
@@ -233,11 +235,30 @@ public class EmployeeDAO {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 		Connection connection=null;
 		PreparedStatement preparedStatement=null;
+		ResultSet resultSet = null;
 		try {
 			
 			
 		System.out.print("更新する社員の社員IDを入力してください:");
 		int empId = Integer.parseInt(br.readLine());
+		
+		connection = DBManager.getConnection();
+		 preparedStatement = connection.prepareStatement("SELECT emp_id FROM employee ");
+		 resultSet = preparedStatement.executeQuery();
+		 List<Integer> empIds = new ArrayList<>();
+		 while(resultSet.next()){
+				empIds.add(resultSet.getInt("emp_id"));
+         }
+		 
+		 boolean flag = false;
+		 for(int num : empIds) {
+			 if(num==empId) {
+				 flag=true;
+			 }
+		 }
+		 
+		 if(flag == true) {
+		 
 		System.out.print("社員名:");
 		String empName = br.readLine();
 		System.out.print("性別(0:回答しない, 1:男性, 2:女性, 9:その他):");
@@ -247,7 +268,7 @@ public class EmployeeDAO {
 		System.out.print("部署ID(1:営業部、2:経理部、3:総務部):");
 		
 		int deptId = Integer.parseInt(br.readLine());
-		connection = DBManager.getConnection();
+		
 		preparedStatement = connection.prepareStatement(ConstantSQL.SQL_UPDATE);
 		
 		preparedStatement.setString(1,empName);
@@ -255,9 +276,14 @@ public class EmployeeDAO {
 		preparedStatement.setString(3,birthday);
 		preparedStatement.setInt(4,deptId);
 		preparedStatement.setInt(5,empId);
+		
 		preparedStatement.executeUpdate();
-
+		
 		System.out.println("社員情報を更新しました");
+		 } else {
+			 System.out.println("該当する社員は存在しません。");
+		 }
+		
 		} catch(ClassNotFoundException | SQLException | NumberFormatException | IOException e) {
 		    e.printStackTrace();
 		} finally {
@@ -381,7 +407,52 @@ public class EmployeeDAO {
 	 */
 	public void delete(Integer empId) throws ClassNotFoundException, SQLException {
 		//TODO 以下に実装する
+		BufferedReader br=new BufferedReader(new InputStreamReader(System.in));
 
+		Connection connection=null;
+		PreparedStatement preparedStatement=null;
+		ResultSet resultSet = null;
+
+		try {
+			
+			connection = DBManager.getConnection();
+			 preparedStatement = connection.prepareStatement("SELECT emp_id FROM employee ");
+			 resultSet = preparedStatement.executeQuery();
+			 List<Integer> empIds = new ArrayList<>();
+			 while(resultSet.next()){
+					empIds.add(resultSet.getInt("emp_id"));
+	         }
+			 
+			 boolean flag = false;
+			 for(int num : empIds) {
+				 if(num==empId) {
+					 flag=true;
+				 }
+			 }
+			 
+			 if(flag == true) {
+		   connection = DBManager.getConnection();
+		   
+		   preparedStatement=connection.prepareStatement(ConstantSQL.SQL_DELETE);
+		   
+		   preparedStatement.setInt(1,empId);
+		   
+		   int cnt=preparedStatement.executeUpdate();
+		   System.out.println("社員情報を削除しました");
+		
+		} else {
+				 System.out.println("該当する社員は存在しません。");
+		}
+		 } catch(ClassNotFoundException | SQLException e) {
+		   e.printStackTrace();
+		   
+		 } finally {
+		   DBManager.close(preparedStatement);
+		   DBManager.close(connection);
+
+		 }
+		
 	}
-
 }
+
+

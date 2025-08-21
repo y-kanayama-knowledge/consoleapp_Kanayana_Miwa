@@ -27,7 +27,7 @@ public class ConstantSQL {
 	public static final String SQL_UPDATE = "UPDATE employee SET emp_name = ?,gender = ?,birthday = ?,dept_id = ? WHERE emp_id = ?";
 
 	/** 削除 */
-	public static final String SQL_DELETE = "";
+	public static final String SQL_DELETE = "DELETE FROM employee WHERE emp_id=?";
 
 	/** 任意項目の更新の結合ベース */
 	public static final String SQL_UPDATE_BASE = "UPDATE employee SET ";

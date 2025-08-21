@@ -130,6 +130,9 @@ public class MainSystem01NonValid {
 					//TODO 以下に実装する
 
 					System.out.print("削除する社員の社員IDを入力してください:");
+					
+					int eId=Integer.parseInt(br.readLine());
+					employeeDAO.delete(eId);
 
 					break;
 
