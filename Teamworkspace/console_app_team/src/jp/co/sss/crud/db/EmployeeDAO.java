@@ -281,7 +281,7 @@ public class EmployeeDAO {
 		
 		System.out.println("社員情報を更新しました");
 		 } else {
-			 System.out.println("該当する社員は存在しません。");
+			 System.out.println("対象者がいませんでした5");
 		 }
 		
 		} catch(ClassNotFoundException | SQLException | NumberFormatException | IOException e) {
@@ -441,7 +441,7 @@ public class EmployeeDAO {
 		   System.out.println("社員情報を削除しました");
 		
 		} else {
-				 System.out.println("該当する社員は存在しません。");
+				 System.out.println("対象者がいませんでした");
 		}
 		 } catch(ClassNotFoundException | SQLException e) {
 		   e.printStackTrace();
