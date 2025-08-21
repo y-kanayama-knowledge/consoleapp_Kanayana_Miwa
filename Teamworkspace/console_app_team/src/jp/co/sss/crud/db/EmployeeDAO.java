@@ -134,7 +134,39 @@ public class EmployeeDAO {
 	public List<Employee> findByDeptId(int deptId) throws ClassNotFoundException, SQLException {
 		List<Employee> employees = new ArrayList<>();
 		//TODO 以下に実装する
-
+		Employee employee = null;
+		Department department = null;
+		Connection connection = null;
+		PreparedStatement preparedStatement = null;
+		ResultSet resultSet = null;
+		try {
+			connection = DBManager.getConnection();
+		     
+		     preparedStatement = connection.prepareStatement(ConstantSQL.SQL_FIND_BY_DEPTID);
+		     
+		     preparedStatement.setInt(1,deptId);
+		     
+		     resultSet = preparedStatement.executeQuery();
+		     while(resultSet.next()){
+	 		    	Department dept = new Department();
+					employee = new Employee();
+					employee.setEmpId(resultSet.getInt("emp_id"));
+					employee.setEmpName(resultSet.getString("emp_name"));
+					employee.setGender(resultSet.getInt("gender"));
+					employee.setBirthday(resultSet.getString("birthday"));
+					dept.setDeptName(resultSet.getString("dept_name"));
+					employee.setDepartment(dept);
+					employees.add(employee);
+		           
+		     }
+			}catch(ClassNotFoundException | SQLException e){
+	           e.printStackTrace();
+		         
+	         } finally {
+	           DBManager.close(resultSet);
+	           DBManager.close(preparedStatement);
+	           DBManager.close(connection);
+	         }
 		return employees;
 	}
 

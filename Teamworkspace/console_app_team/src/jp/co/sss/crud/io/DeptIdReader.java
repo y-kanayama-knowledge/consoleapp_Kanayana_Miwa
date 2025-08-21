@@ -1,6 +1,8 @@
 package jp.co.sss.crud.io;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 部署IDのコンソール入力をするクラス
@@ -13,7 +15,9 @@ public class DeptIdReader {
 	 * @throws IllegalArgumentException 不正な入力の場合にスローされる
 	 */
 	public Integer input() throws IOException, IllegalArgumentException {
-		return null;
+		BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+		int id = Integer.parseInt(reader.readLine());
+		return id;
 	}
 
 	/**
